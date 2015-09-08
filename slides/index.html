@@ -1,0 +1,1276 @@
+<!doctype html>
+<!--suppress ALL -->
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>TypeScript und Angular</title>
+  <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/solarized.css" id="theme">
+  <link rel="stylesheet" href="lib/css/zenburn.css">
+
+  <style>
+    section {
+      text-align: left;
+    }
+
+    .vspace {
+      height: 20px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+<div class="reveal">
+
+  <div class="slides">
+    <!-- Titel -->
+    <section>
+      <h2>
+        Professionelle<br/>
+        AngularJS-Anwendungen<br/>
+        mit TypeScript
+      </h2>
+
+      <div class="vspace"></div>
+      <h6>Roman Roelofsen</h6>
+
+      <p>
+        <small>
+          Twitter &amp; GitHub: <a href="https://twitter.com/romanroe">romanroe</a>
+        </small>
+      </p>
+    </section>
+
+    <!-- Über mich -->
+    <section data-markdown>
+      <!--@formatter:off-->
+      <script type="text/template">
+        ## Über mich
+        - Alpha Geek (aka Geschäftsführer)
+          - w11k GmbH
+          - theCodeCampus
+        - IT Beratung / Individualsoftware
+        - Fokus auf Web Engineering
+      </script>
+      <!--@formatter:on-->
+    </section>
+
+    <!-- Thin Client -->
+    <section>
+      <h3>Thin Web (klassische) Clients</h3>
+      <section>
+        <ul>
+          <li>Jede UI Aktion wird vom Server behandelt</li>
+          <li>Server liefert Daten und Darstellung</li>
+          <li>UIs werden i.d.R. mit jQuery & Co. "gepimped"</li>
+        </ul>
+        <div class="vspace"></div>
+        <ul>
+          <li>Typisch für:</li>
+          <ul>
+            <li>Servlets-basierte Web Frameworks</li>
+            <li>PHP</li>
+            <li>...</li>
+          </ul>
+        </ul>
+      </section>
+      <section>
+        <h4>Vorteile</h4>
+        <ul>
+          <li>Code ist zentralisiert</li>
+          <li>Code ist nicht öffentlich</li>
+          <li>Es werden nur die Daten übertragen, die für eine Ansicht notwendig sind</li>
+          <li>Vereinfacht Sicherheitsanforderungen</li>
+          <li>Vereinfacht Datenbankoperationen</li>
+        </ul>
+      </section>
+      <section>
+        <h4>Nachteile</h4>
+        <ul>
+          <li>Komplett überholtes Bedienkonzept</li>
+          <li>Schlechte UX == unzufriedene Benutzer</li>
+          <li>"Komplexere" UIs sind aufwendig</li>
+        </ul>
+      </section>
+    </section>
+
+    <!-- Rich Client -->
+    <section>
+      <h3>Rich Web Clients</h3>
+      <section>
+        <ul>
+          <li>Die gesamte UI Logik läuft im Browser</li>
+          <li>Optional: Geschäftslogik im Client</li>
+          <li>Server liefert nur Daten (REST o.ä.), keine Darstellung</li>
+        </ul>
+        <div class="vspace"></div>
+        <ul>
+          <li>Frameworks</li>
+          <ul>
+            <li>AngularJS</li>
+            <li>Ember.js</li>
+            <li>Facebook React</li>
+          </ul>
+        </ul>
+      </section>
+      <section>
+        <h4>Vorteile</h4>
+        <ul>
+          <li>Moderne User Experience</li>
+          <li>Komplexe Bedienkonzepte werden möglich</li>
+          <li>Server kann zustandlos werden</li>
+          <li>Strenge, erzwungene Trennung der Architektur:</li>
+          <ul>
+            <li>Server liefert Daten</li>
+            <li>Client stellt Daten dar</li>
+          </ul>
+        </ul>
+      </section>
+      <section>
+        <h4>Nachteile</h4>
+        <ul>
+          <li>Breiteres Wissen beim Programmierer notwendig</li>
+          <li>Geschäftslogik im Client eventuell ungewünscht</li>
+          <li>Erhöhte Angreifbarkeit</li>
+          <li>Erfordert mehr Resourcen im Client (RAM & CPU)</li>
+        </ul>
+      </section>
+    </section>
+
+    <!-- Angular -->
+    <section>
+      <h3>AngularJS</h3>
+      <section>
+        <ul>
+          <li>Web Framework für Rich Client Apps</li>
+          <li>Entwickelt von Google</li>
+          <li>Riesiges Ökosystem</li>
+          <li>"HTML enhanced for web apps!"</li>
+          <li>Deklaratives Layout + JavaScript Code</li>
+        </ul>
+        <div class="vspace"></div>
+        <ul>
+          <li>
+            Was Angular <b>nicht</b> ist:
+            <ul>
+              <li>Imperative API zur UI Erstellung (à la Swing)</li>
+              <li>HTML/XML Abstraktion zur UI Generierung (à la Flex)</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h4>Demo: 001_angular</h4>
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Module
+          - Top Level Element
+
+          ```
+          var mod = angular.module("myApp", ["dependencyA", "dependencyB"]);
+          ```
+          - Einstiegspunkt in die API
+
+          ```
+          mod.controller("MyController", MyController);
+
+          function MyController() {
+            ...
+          }
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Controller
+          - Model-View-Controller
+          - Verbindung zwischen View und Daten
+          - Logik/Code für View
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Controller erstellen
+          - Best practice: Konstruktor-Funktion
+
+          ```
+          function MyController() {
+            this.name = "Max";
+
+            this.sayHello = function () {
+              alert("Hello " + this.name + "!");
+            };
+          }
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Controller verwenden
+          ```html
+          <body ng-controller="MyController as myController">
+            <div>
+              Namen eingeben:
+              <input type="text" ng-model="myController.name">
+            </div>
+
+            <div>
+              Ihr Name: <span>{{myController.name}}</span>
+            </div>
+
+            <button ng-click="myController.sayHello()">Hallo!</button>
+          </body>
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section>
+        <h4>Demo: 002_controller</h4>
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Services
+          - Probleme von Controllern
+            - Controller werden sehr schnell zu groß
+            - Schlechte Wartbarkeit, unübersichtlich
+            - Kein State
+
+          - Daher Services
+            - Globale Registry
+            - Singletons
+            - Verbindung: Dependency Injection
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Service erstellen
+          - Variante 1: Konstruktor-Funktion
+
+          ```
+          function MyService() {
+            this.sayHello = function(name) {
+              alert("Hello " + name + "!");
+            }
+          }
+
+          mod.service("MyService", MyService);
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Service erstellen
+          - Variante 2: Factory
+
+          ```
+          function MyService()  {
+            var service = {};
+
+            service.sayHello = function(name) {
+              alert("Hello " + name + "!");
+            };
+
+            return service;
+          }
+
+          mod.factory("MyService", MyService);
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Service verwenden
+          - Dependency Injection...
+
+          ```
+          mod.service("MyService", MyService);
+          mod.factory("MyService", MyService);
+
+          ```
+
+          - ... im Controller
+
+          ```
+          function MyController(MyService) {
+            this.name = "Max";
+
+            this.sayHello = function () {
+              MyService.sayHello(this.name);
+            };
+          }
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section>
+        <h4>Demo: 003_service</h4>
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Probleme mit Services und Controllern
+          - Mehrere Controller auf einer Seite lassen sich schwer verbinden
+          - Datenaustausch zwischen Controller-Hierarchien nur über Events
+          - Services sind immer Singletons
+          - Wiederverwendbarkeit ist zwar möglich, aber nicht "bequem"
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Direktiven
+          - Wiederverwendbare UI Komponenten
+          - "HTML enhanced for web apps!"
+          - Kapselung von Code und UI
+          - Definierte Datenschnittstellen
+            - statt loser Events
+          - Guter Schnittpunkt für Teams
+
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Direktive Beispiele
+          ```html
+          <input type="text" ng-model="MODEL">
+
+          <button ng-click="FUNCTION()">Hallo!</button>
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Direktive Beispiele
+          - HTML
+
+          ```html
+          <person data="myController.personObj"/>
+          ```
+
+          - Controller
+
+          ```javascript
+          this.personObj = {firstname: "Max", lastname: "Mustermann"}
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Direktive erstellen
+          ```
+          function PersonDirective() {
+            return {
+              restrict: "E",
+              scope: {
+                data: "="
+              },
+              controller: function ($scope) {
+                $scope.sayHello = function (person) {
+                  alert("Hello " + person.firstname + "!");
+                }
+              },
+              template: "Hallo {{data.firstname}} {{data.lastname}}!" +
+                "<button ng-click='sayHello(data)'>Hello</button>"
+            }
+          }
+
+          mod.directive("person", PersonDirective);
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section>
+        <h4>Demo: 004_directive</h4>
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Probleme
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Probleme
+          - Module bieten keine Kapselung
+
+          ```
+          angular.module("mod1").service("MyUtils", MyUtils);
+
+          angular.module("mod2").service("MyUtils", MyUtils);
+          angular.module("mod2").controller("MyController", MyController);
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Probleme
+          - Keine Struktur
+
+          ```
+          function MyController() {
+            this.help = function () {
+              ...
+            };
+
+            this.name = "Max";
+
+            var privateList = [];
+
+            this.sayHello = function () {
+              ...
+            };
+
+            this.unused = "";
+          }
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Probleme
+          - Dicts
+
+          ```html
+          return {
+            restrict: ...,
+            scope: ...,
+            controller: ...,
+            template: ...,
+            priority: ...,
+            templateUrl: ...,
+            templateNamespace: ...,
+            bindToController: ...,
+            require: ...,
+            compile: ...,
+            link: ...
+          }
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+    </section>
+
+    <section>
+      <h3>TypeScript</h3>
+
+      <section></section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          - Entwickelt von Microsoft
+            - Apache License
+            - http://www.typescriptlang.org
+            - https://github.com/Microsoft/TypeScript
+          - Compiler: TypeScript -> JavaScript
+            - Transpiler?
+          - Keine API!
+          - Keine Runtime!
+
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Hello TypeScript! JavaScript?
+          ```
+          function hello(name) {
+            alert("Hello " + name + "!");
+          }
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Hello TypeScript!
+          ```
+          function hello(name: any) {
+            alert("Hello " + name + "!");
+          }
+          ```
+          ```
+          function hello(name: string) {
+            alert("Hello " + name + "!");
+          }
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Basic Types
+          ```typescript
+          var isDone: boolean = false;
+          var height: number = 6;
+          var name: string = "bob";
+          var list:number[] = [1, 2, 3];
+
+          enum Color {Red, Green, Blue}
+          var c: Color = Color.Green;
+
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Type Inferencing
+          ```typescript
+          var b1: boolean = false;
+          var b2 = true;
+
+          b2 = b1;
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown data-separator="^\n---\n$"
+               data-separator-vertical="^\n--\n$"
+               data-element-attributes="{_\s*?([^}]+?)}">
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Typisierung
+          ```
+          var person = {
+            firstname: "Max",
+            lastname: "Mustermann"
+          };
+          ```
+          <!-- {_class="fragment "} -->
+          ```
+          interface Person {
+            firstname: string;
+            lastname: string;
+          }
+          ```
+          <!-- {_class="fragment "} -->
+          ```
+          var person: Person = {
+            firstname: "Max",
+            lastname: "Mustermann"
+          };
+          ```
+          <!-- {_class="fragment "} -->
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Typisierung
+          ```
+          var person: Person = {
+            firstname: "Max",
+            lastname: "Mustermann"
+          };
+
+          function hello(person: Person) {
+            alert("Hello " + person.firstname + "!");
+          }
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Compiler Fehler!
+          ```
+          interface Person {
+            firstname: string;
+            lastname: string;
+          }
+
+          var person: Person = {
+            firstname: "Max",
+            lastnme: "Mustermann" // TYPO
+          };
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section>
+        <h4>Demo: 100</h4>
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Klassen - structural type system
+          ```
+          class Person {
+            firstname: string;
+            lastname: string;
+          }
+
+          var person: Person = {
+            firstname: "Max",
+            lastname: "Mustermann"
+          };
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Klassen - structural type system
+          - Fehler!
+
+          ```
+          class Person {
+            firstname: string;
+            lastname: string;
+
+            sayHello() {
+              alert(this.firstname);
+            }
+          }
+
+          var person: Person = {
+            firstname: "Max",
+            lastname: "Mustermann"
+          };
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section>
+        <h4>Demo: 101</h4>
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Klassen - structural type system
+          ```
+          class Person {
+            firstname: string;
+            lastname: string;
+
+            constructor(firstname: string, lastname: string) {
+              this.firstname = firstname;
+              this.lastname = lastname;
+            }
+
+            sayHello() {
+              alert(this.firstname);
+            }
+          }
+
+          var person: Person = new Person("Max", "Mustermann");
+          person.sayHello();
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Klassen - structural type system
+          - Besser:
+
+          ```typescript
+          class Person {
+
+            constructor(public firstname: string, public lastname: string) {
+            }
+
+            sayHello() {
+              alert(this.firstname);
+            }
+          }
+
+          var person: Person = new Person("Max", "Mustermann");
+          person.sayHello();
+          ```
+
+          http://www.typescriptlang.org/Playground
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Integration mit JavaScript
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Integration mit JavaScript - Optional
+          ```typescript
+          interface Person {
+            name: string;
+            age?: number;
+          }
+          ```
+
+          - Gültig:
+
+          ```typescript
+          var p1: Person = { name: "Max", age: 40 };
+          var p1: Person = { name: "Max" };
+          ```
+
+          - Ungültig:
+
+          ```typescript
+          var p1: Person = { name: "Max", age: "40" };
+          var p1: Person = { name: "Max", city: "Bonn" };
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Integration mit JavaScript - Syntax
+          ```javascript
+          // Array
+          var list = [1, 2, 3];
+          list.aProperty = "foo";
+          var i = list[1];
+
+          // Function
+          var myFunction = function () {
+          };
+          myFunction.aProperty = "bar";
+          var y = myFunction();
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Integration mit JavaScript - Arrays
+          ```typescript
+          interface StringList {
+            [index: number]: string;
+            aProperty: number;
+          }
+          ```
+          ```typescript
+          function myFunction(list: StringList) {
+            var str = list[2];
+            list.aProperty = "foo";
+          }
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Integration mit JavaScript - Function Types
+          ```typescript
+          interface Alerter {
+            (message: string): void;
+            aProperty: number;
+          }
+          ```
+          ```typescript
+          function myFunction(alerter: Alerter) {
+            alerter("my message");
+            alerter.aProperty = "bar";
+          }
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Integration mit JavaScript - Union Types
+          ```typescript
+          interface Options {
+            args: string|string[];
+          }
+          ```
+
+          - Gültig:
+
+          ```typescript
+          var o1: Options = { args: "a" };
+
+          var o2: Options = { args: ["a", "b", "c"] };
+          ```
+
+          - Ungültig:
+
+          ```typescript
+          var o3: Options = {
+              args: 1
+          };
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Integration mit JavaScript - Union Types / Type Guards
+          ```typescript
+          function useFirstArg(o: Options) {
+
+            var a = o.args;
+
+            if(typeof a === 'string') {
+              return a.substring(5);
+            } else {
+              return a[0].substring(5);
+            }
+
+          }
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Module
+          - CommonJS
+          - AMD (require.js)
+          - EcmaScript 6 Module
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Module
+          - Datei "utils.ts"
+
+          ```typescript
+          var counter = 0;
+
+          export class Utils {
+              static message(message: string) {
+                  alert((counter++) + " " + message);
+              }
+          }
+          ```
+          - Datei "service.ts"
+
+          ```typescript
+          import {Utils} from "./utils";
+
+          Utils.message("test");
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+    </section>
+
+
+    <section>
+      <h3>AngularJS und TypeScript kombinieren</h3>
+
+      <section></section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Klassen für Controller
+          ```typescript
+          class TsController {
+
+            private counter = 0;
+            name: string;
+
+            constructor() {
+              this.name = "Max";
+            }
+
+            sayHello() {
+              alert((this.counter++) + " Hello from TS!");
+            }
+          }
+
+          mod.controller("TsController", TsController);
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Klassen für Services
+          ```typescript
+          class TsService {
+
+            private counter = 0;
+
+            sayHello() {
+              alert((this.counter++) + " Hello from TsService!");
+            }
+          }
+
+          mod.service("tsService", TsService);
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### "Entweder/Oder"
+
+          ```javascript
+          // Variante 1
+          angular.module("app").service("MyService", function (utils) {
+            ...
+          });
+
+          // Variante 2
+          angular.module("app").service("MyService", ["utils", function (utils) {
+            ...
+          }]);
+          ```
+
+
+          ```
+          function service(name: string, inj: Function|any[]) {
+            // ...
+          }
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### API für Directives
+
+          ```javascript
+          return {
+            restrict: "E",
+            scope: {
+              data: "="
+            },
+            controller: function ($rootScope, $scope) { /* ... */ },
+            template: "..."
+          }
+          ```
+
+          ```typescript
+          interface IDirective {
+              controller?: any;
+              restrict?: string;
+              scope?: any;
+              template?: any;
+              // ...
+          }
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Module
+
+          - AngularJS Module bieten keine Kapselung
+          - TypeScript Module unterstützen private/public, ...
+
+          ```typescript
+          export class MyService {
+            // ...
+          }
+          ```
+
+          <br/>
+
+          - Bringt leider nichts, Injector hat einen globalen Namensraum
+
+          ```
+          appMod.service("MyService", MyService);
+          ```
+
+
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+    </section>
+
+    <section>
+
+      <h3>TypeScript type definitions</h3>
+
+      <section></section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### .d.ts Dateien
+          - Vergleichbar mit C Header Dateien
+          - Beschreiung, Definition von API
+          - Kein "ausführbarere" Code
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### .d.ts Beispiel
+          ```typescript
+          interface JQueryStatic {
+              (selector: string, context?: Element|JQuery): JQuery;
+              (element: Element): JQuery;
+              (html: string, ownerDocument?: Document): JQuery;
+              // ...
+          }
+
+          declare var $: JQueryStatic;
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Directiven API - JavaScript Style
+          ```typescript
+          function PersonDirective() {
+            return {
+              restrict: "E",
+              scope: {
+                data: "="
+              },
+              controller: function ($scope) {
+                $scope.sayHello = function (person) {
+                  alert("Hello " + person.firstname + "!");
+                }
+              },
+              template: "Hallo {{data.firstname}} {{data.lastname}}!" +
+                "<button ng-click='sayHello(data)'>Hello</button>"
+            }
+          }
+
+          mod.directive("person", PersonDirective);
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### Directiven API - TypeScript Style
+          ```typescript
+          interface TsDirectiveScope extends ng.IScope {
+            data: Person
+          }
+
+          class TsDirective implements ng.IDirective {
+
+            restrict = 'E';
+            scope = { data: "=" };
+            template = "...";
+
+            controller($scope: TsDirectiveScope) {
+              console.log("Firstname: " + $scope.data.firstname);
+            }
+
+          }
+
+          mod.directive('tsDirective', () => new TsDirective());
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          #### DefinitelyTyped
+          - http://definitelytyped.org/
+          - 1.129 Projekte (Stand: 20. August 2015)
+          - Installation mit:
+
+
+          ```shell
+          $ tsd install angularjs --save
+          ```
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+    </section>
+
+    <section>
+      <h3>Fazit</h3>
+      <section></section>
+
+      <section data-markdown>
+        <!--@formatter:off-->
+        <script type="text/template">
+          - Steile Lernkurve
+          - TypeScript vereint statische Typisierung mit der dynamischen JavaScript-Welt
+          - Module Loader müssen zur Laufzeit eingebunden sein (z.B. SystemJS)
+          - Hohe Anforderungen an das Build System
+            - Compiler, Linting, SystemJS Builder
+          - Statisch typisierte Web-Entwicklung ist ungewohnt
+        </script>
+        <!--@formatter:on-->
+      </section>
+
+    </section>
+
+    <section>
+      <p>Roman Roelofsen</p>
+
+      <p>@romanroe</p>
+    </section>
+
+
+  </div>
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+  // Full list of configuration options available at:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    controls: true,
+    progress: true,
+    slideNumber: true,
+    history: true,
+    center: true,
+
+    transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+    // Optional reveal.js plugins
+    dependencies: [
+      {
+        src: 'lib/js/classList.js', condition: function () {
+        return !document.body.classList;
+      }
+      },
+      {
+        src: 'plugin/markdown/marked.js', condition: function () {
+        return !!document.querySelector('[data-markdown]');
+      }
+      },
+      {
+        src: 'plugin/markdown/markdown.js', condition: function () {
+        return !!document.querySelector('[data-markdown]');
+      }
+      },
+      {
+        src: 'plugin/highlight/highlight.js',
+        async: true,
+//        condition: function () {
+//          return !!document.querySelector('pre code');
+//        },
+        callback: function () {
+          hljs.initHighlightingOnLoad();
+        }
+      },
+      {src: 'plugin/zoom-js/zoom.js', async: true},
+      {src: 'plugin/notes/notes.js', async: true}
+    ]
+  });
+
+</script>
+
+</body>
+</html>

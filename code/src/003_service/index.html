@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head><title>Demo</title></head>
+<!-- inject:js --><!-- endinject -->
+<body ng-controller="MyController as myController">
+
+<div>
+  Namen eingeben:
+  <input type="text" ng-model="myController.name">
+</div>
+
+<div>
+  Ihr Name: <span>{{myController.name}}</span>
+</div>
+
+<button ng-click="myController.sayHello()">Hallo!</button>
+
+</body>
+</html>

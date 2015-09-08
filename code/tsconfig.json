@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "system",
+    "noEmitOnError": true,
+    "noImplicitAny": true,
+    "removeComments": false,
+    "preserveConstEnums": true
+  },
+  "files": []
+}

@@ -1,0 +1,11 @@
+{
+    "name": "talk",
+    "version": "0.0.0",
+    "dependencies": {
+
+        "angular": "latest"
+
+    },
+    "devDependencies": {
+    }
+}

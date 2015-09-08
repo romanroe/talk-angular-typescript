@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head><title>Demo</title></head>
+<!-- inject:js --><!-- endinject -->
+<body>
+
+<div ng-controller="TsController as tsController">
+
+  <div>
+    Namen eingeben:
+    <input type="text" ng-model="tsController.name">
+  </div>
+
+  <div>
+    Ihr Name: <span>{{tsController.name}}</span>
+  </div>
+
+  <button ng-click="tsController.sayHello()">Hallo!</button>
+
+</div>
+
+<hr/>
+
+<div ng-controller="TsController2 as ts2">
+
+  <button ng-click="ts2.sayHello()">Hallo Service!</button>
+
+</div>
+
+</body>
+</html>
